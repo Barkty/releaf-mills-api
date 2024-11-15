@@ -4,10 +4,10 @@ export class CreateMills extends BaseEntity<CreateMills> {
     latitude: string
     longitude: string
     numtransactions: number
-    p1Amount: number
-    millName: string
-    p1PriceTon: number
-    lastTransactionDate: Date
+    p1amount: number
+    millname: string
+    p1priceton: number
+    lasttransactiondate: Date
 }
 
 export class FilterMills extends BaseEntity<FilterMills> {
@@ -15,4 +15,8 @@ export class FilterMills extends BaseEntity<FilterMills> {
     longitude?: string
     from_date?: Date;
     to_date?: Date;
+}
+
+export class MillID extends BaseEntity<MillID> {
+    mill_id: string
 }

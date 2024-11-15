@@ -3,13 +3,14 @@ import * as dumpParams from "./entities";
 import dumpQueries from './query'
 
 export interface MillsRepository {
-    createMill(args:  (string | number)[]): Promise<dumpParams.Mills>;
+    createMill(args: any[]): Promise<dumpParams.Mills>;
     fetchSingleMill(args: any[]): Promise<dumpParams.Mills | null>
     fetchAndFilterMill(args: any[]): Promise<dumpParams.Mills[]>
+    editMill(args: any[]): Promise<dumpParams.Mills | null>
 }
 
 export class MillsRepositoryImpl implements MillsRepository {
-    public async createMill(args:  (string | number)[]): Promise<dumpParams.Mills> {
+    public async createMill(args: any[]): Promise<dumpParams.Mills> {
         return db.one(dumpQueries.createMill, args);
     }
 
@@ -19,6 +20,10 @@ export class MillsRepositoryImpl implements MillsRepository {
     
     public async fetchAndFilterMill(args: string[]): Promise<dumpParams.Mills[]> {
         return db.any(dumpQueries.fetchFilterMills, args)
+    }
+
+    public async editMill(args: any[]): Promise<dumpParams.Mills | null> {
+        return db.oneOrNone(dumpQueries.updateMill, args)
     }
 }
 

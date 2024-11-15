@@ -184,27 +184,48 @@
           ]
         }
       },
-      "/users/banks/account-details/{bankId}": {
-        "delete": {
+      "/dumpsites/{dump_id}": {
+        "patch": {
           "tags": [
             "User"
           ],
-          "summary": "Fetch user withdrawal Banks",
-          "description": "Returns user banks",
-          "operationId": "banks-withdrawal",
+          "summary": "Edit dumpsite",
+          "description": "Edit dumpsite",
+          "operationId": "edit-dumpsite",
           "parameters": [
             {
-              "name": "bankId",
+              "name": "dump_id",
               "in": "path",
-              "description": "Bank ID",
+              "description": "PKS Dumpsite ID",
               "required": true,
               "explode": false,
               "schema": {
                 "type": "string",
-                "default": "670d0059faebbdcbec0e99c0"
+                "default": "dump_id-670d0059faebbdcbec0e99c0"
               }
             }
           ],
+          "requestBody": {
+            "description": "Palm Kernel Dumpsite",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              }
+            },
+            "required": true
+          },
           "responses": {
             "200": {
               "description": "Successful operation",
@@ -231,10 +252,251 @@
             }
           ]
         }
+      },
+      "/mills/new": {
+        "post": {
+          "tags": [
+            "Mills"
+          ],
+          "summary": "Creates a new mill",
+          "description": "Creates a new mill to be added to the marker",
+          "operationId": "mill-new",
+          "requestBody": {
+            "description": "Creates a new mill to be added to the marker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PKS"
+                  }
+                },
+                "application/xml": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PKS"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Dumpsite already exists"
+            }
+          }
+        }
+      },
+      "/mills": {
+        "get": {
+          "tags": [
+            "Mills"
+          ],
+          "summary": "Fetch mills",
+          "description": "Fetch and filter mills",
+          "operationId": "dumpsites",
+          "parameters": [
+            {
+              "name": "latitude",
+              "in": "query",
+              "description": "Latitude value that need to considered for filter",
+              "required": false,
+              "explode": false,
+              "schema": {
+                "type": "number",
+                "default": 5.587366
+              }
+            },
+            {
+             "name": "longitude",
+              "in": "query",
+              "description": "Longitude value that need to considered for filter",
+              "required": false,
+              "explode": false,
+              "schema": {
+                "type": "number",
+                "default": 5.587366
+              }
+            },
+            {
+             "name": "status",
+              "in": "query",
+              "description": "PKS dumpsite status that need to considered for filter",
+              "required": false,
+              "explode": false,
+              "schema": {
+                "type": "string",
+                "default": "active"
+              }
+            },
+            {
+              "name": "fromDate",
+              "in": "query",
+              "description": "Dumpsite created on or after this date to be filtered",
+              "required": false,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "default": "2024-01-01"
+              }
+            },
+            {
+              "name": "toDate",
+              "in": "query",
+              "description": "Dumpsite created on or before this date to be filtered",
+              "required": false,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "default": "2024-11-01"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/requestBodies/DumpsiteArray"
+                  }
+                },
+                "application/xml": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PaginatedResult"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ]
+        }
+      },
+      "/mills/{mill_id}": {
+        "patch": {
+          "tags": [
+            "Mills"
+          ],
+          "summary": "Edit mills",
+          "description": "Edit mills",
+          "operationId": "edit-mills",
+          "parameters": [
+            {
+              "name": "mill_id",
+              "in": "path",
+              "description": "Mill ID",
+              "required": true,
+              "explode": false,
+              "schema": {
+                "type": "string",
+                "default": "mill_id-670d0059faebbdcbec0e99c0"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Mill data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Mills"
+                  }
+                },
+                "application/xml": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Mills"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Invalid or expired token"
+            }
+          },
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ]
+        }
       }
     },
     "components": {
       "schemas": {
+        "Mills": {
+          "type": "object",
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "example": 5.607843
+            },
+            "longitude": {
+              "type": "number",
+              "example": 5.607843
+            },
+            "lasttransactiondate": {
+              "type": "date",
+              "example": "2023-10-09"
+            },
+            "numtransactions": {
+              "type": "number",
+              "example": 10
+            },
+            "p1amount": {
+              "type": "number",
+              "example": 1000
+            },
+            "p1priceton": {
+              "type": "number",
+              "example": 1000
+            }
+          },
+          "xml": {
+            "name": "pks"
+          }
+        },
         "PKS": {
           "type": "object",
           "properties": {
@@ -390,7 +652,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/Mills"
                 }
               }
             }

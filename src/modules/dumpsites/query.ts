@@ -42,31 +42,25 @@ export default {
             longitude,
             status,
             capacity,
-            lasttransactiondate,
-            millname,
-            p1amount,
-            p1priceton,
-            is_deleted
             created_at,
-            updated_at,
-            numtransactions
+            updated_at
         FROM 
             dumpsites
         WHERE 
             ((latitude = $1 OR $1 IS NULL)
              OR (longitude = $2 OR $2 IS NULL)) 
              AND (status = $3 OR $3 IS NULL) 
-             AND ((lasttransactiondate::DATE BETWEEN $4::DATE AND $5::DATE) OR ($4 IS NULL AND $5 IS NULL));
+             AND ((created_at::DATE BETWEEN $4::DATE AND $5::DATE) OR ($4 IS NULL AND $5 IS NULL));
 
     `,
     updateDumpsite: `
         UPDATE dumpsites
         SET 
             updated_at = NOW(),
-            latitude = $2,
-            longitude = $3,
-            capacity = $4,
-
+            latitude = COALESCE($2, latitude),
+            longitude = COALESCE($3, longitude),
+            capacity = COALESCE($4, capacity),
+            status = COALESCE($5, status)
          WHERE dump_id = $1
          RETURNING dump_id, longitude, last_name, status;`,
 }

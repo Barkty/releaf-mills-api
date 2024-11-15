@@ -15,3 +15,7 @@ export class FilterDumpSite extends BaseEntity<FilterDumpSite> {
     from_date?: Date;
     to_date?: Date;
 }
+
+export class DumpID extends BaseEntity<DumpID> {
+    dump_id: string
+}

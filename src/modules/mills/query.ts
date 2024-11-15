@@ -3,19 +3,18 @@ export default {
         INSERT INTO mills (
             latitude,
             longitude,
-            p1tmount,
+            p1amount,
             numtransactions,
             p1priceton,
-            lastTransactiondate
+            lasttransactiondate
         ) VALUES($1, $2, $3, $4)
         RETURNING latitude,
             longitude,
             p1tmount,
             numtransactions,
             p1priceton,
-            lastTransactiondate,
-            mill_id
-            ;`,
+            lasttransactiondate,
+            mill_id;`,
 
     fetchSingleMill: `
         SELECT 
@@ -51,12 +50,25 @@ export default {
             updated_at,
             numtransactions
         FROM 
-            dumpsites
+            mills
         WHERE 
             ((latitude = $1 OR $1 IS NULL)
              OR (longitude = $2 OR $2 IS NULL)) 
-             AND (status = $3 OR $3 IS NULL) 
-             AND ((lasttransactiondate::DATE BETWEEN $4::DATE AND $5::DATE) OR ($4 IS NULL AND $5 IS NULL));
+             AND ((lasttransactiondate::DATE BETWEEN $3::DATE AND $4::DATE) OR ($3 IS NULL AND $4 IS NULL));
 
     `,
+
+    updateMill: `
+    UPDATE mills
+    SET 
+        updated_at = NOW(),
+        latitude = COALESCE($2, latitude),
+        longitude = COALESCE($3, longitude),
+        lasttransactiondate = COALESCE($4, lasttransactiondate),
+        millname = COALESCE($5, millname),
+        p1amount = COALESCE($6, p1amount),
+        p1priceton = COALESCE($7, p1priceton),
+        numtransactions = COALESCE($8, numtransactions)
+     WHERE mill_id = $1
+     RETURNING dump_id, longitude, last_name, status;`,
 }

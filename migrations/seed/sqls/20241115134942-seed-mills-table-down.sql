@@ -1,0 +1,1 @@
+DELETE FROM mills WHERE latitude=$1 AND longitude = $2;

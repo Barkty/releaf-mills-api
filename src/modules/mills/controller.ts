@@ -5,6 +5,7 @@ import millsServices from "./services";
 import { BadException, handleCustomError } from "../../shared/errors";
 import * as ApiResponse from '../../shared/response';
 import { StatusCodes } from "http-status-codes";
+import logger from "../../shared/logger";
 
 export class MillsController {
     public createMills: fnRequest = async(req, res) => {
@@ -26,7 +27,22 @@ export class MillsController {
 
         const data = await millsServices.fetch(payload)
 
+        logger.info(`${payload.longitude} fetched mills successfully in the DB`, 'fetchMills.dumpsite.controllers.ts');
         return ApiResponse.success(res, StatusCodes.OK, Message.FETCHED_DATA_SUCCESSFULLY('mills'), data);
+    }
+
+    public editMills: fnRequest = async(req, res) => {
+        const { body, params } = req;
+        const payload = new Dto.CreateMills(body);
+        const millId = new Dto.MillID(params);
+
+        const resp = await millsServices.update(payload, millId.mill_id);
+
+        if (resp instanceof BadException) {
+            return handleCustomError(res, resp, StatusCodes.BAD_REQUEST)
+        }
+
+        return ApiResponse.success(res, StatusCodes.CREATED, Message.CREATED_DATA_SUCCESSFULLY('dumpsite'), resp);
     }
 }
 

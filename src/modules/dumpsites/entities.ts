@@ -7,5 +7,5 @@ export class DumpSite extends BaseEntity<DumpSite> {
     capacity: number;
     created_at?: Date;
     updated_at?: Date;
-    id?: number
+    id?: string
 }

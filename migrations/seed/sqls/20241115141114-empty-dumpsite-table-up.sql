@@ -1,0 +1,1 @@
+DELETE FROM dumpsites WHERE latitude=$1 AND longitude = $2;

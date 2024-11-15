@@ -14,7 +14,7 @@ export class MillsServicesImpl implements MillsServices {
 
     public async create(args: dumpDTO.CreateMills): Promise<dumpParams.Mills | BadException> {
         const filter = [args.latitude, args.longitude]
-        const payload = [args.latitude, args.longitude, args.numtransactions, args.millName, args.p1Amount, args.p1PriceTon]
+        const payload = [args.latitude, args.longitude, args.p1amount, args.numtransactions, args.p1priceton, args.lasttransactiondate]
 
         // check if a dumpsite already exists with same co-ordinates
         let dumpsite = await this.millsRepository.fetchSingleMill(filter);
@@ -38,6 +38,21 @@ export class MillsServicesImpl implements MillsServices {
         const data = await this.millsRepository.fetchAndFilterMill(payload);
 
         return data;
+    }
+
+    public async update(args: dumpDTO.CreateMills, mill_id: string): Promise<dumpParams.Mills | BadException> {
+        const payload = [args.latitude, args.longitude, args.lasttransactiondate, args.millname, args.p1amount, args.p1priceton, args.numtransactions]
+
+        // check if a dumpsite already exists with same co-ordinates
+        let mill = await this.millsRepository.fetchSingleMill([mill_id]);
+
+        if (!mill) {
+            return new BadException(Message.RESOURCE_DOES_NOT_EXIST('Dumpsite'));
+        }
+
+        mill = await this.millsRepository.editMill(payload) as dumpParams.Mills;
+        
+        return mill;
     }
 }
 
