@@ -1,0 +1,16 @@
+{
+    "development": {
+      "ENV": "WERELEAF_DEV_DATABASE_URL"
+    },
+    "staging": {
+      "ENV": "WERELEAF_STAGING_DATABASE_URL"
+    },
+    "test": { 
+      "ENV": "WERELEAF_TEST_DATABASE_URL"
+    },
+    "production": {
+      "ENV": "WERELEAF_PROD_DATABASE_URL"
+    },
+    "sql-file": true
+}
+  

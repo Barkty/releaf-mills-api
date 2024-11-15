@@ -1,0 +1,421 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "WERELEAF API 1.0",
+      "description": "This is documentation for Wereleaf Mills and Palm Kernel Shell (PKS) Dumpsite Map Markeer API based on the OpenAPI 3.0 specification. You can find out more about\nWereleaf at [https://www.releaf.africa](https://www.releaf.africa/). In the first iteration of the Stashwise solution, we've implemented the mills map marker and design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.",
+      "termsOfService": "https://www.releaf.africa/privacy-policy/",
+      "contact": {
+        "email": "support@releaf.earth"
+      },
+      "license": {
+        "name": "MIT 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      },
+      "version": "1.0.0"
+    },
+    "externalDocs": {
+      "description": "Find out more about Wereleaf",
+      "url": "https://www.releaf.africa"
+    },
+    "servers": [
+      {
+        "url": "https://releaf-mills-api.onrender.com/api/v1"
+      },
+      {
+        "url": "http://localhost:3421/api/v1"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Mills",
+        "description": "Everything about mills ",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "https://releaf.africa/site"
+        }
+      },
+      {
+        "name": "PKS",
+        "description": "Operations about palm kernel sheel dumpsite",
+        "externalDocs": {
+          "description": "Find out more about our policies",
+          "url": "https://www.releaf.africa/kraken"
+        }
+      }
+    ],
+    "paths": {
+      "/dumpsites/new": {
+        "post": {
+          "tags": [
+            "PKS"
+          ],
+          "summary": "Creates a new dumpsite",
+          "description": "Creates a new dumpsite to be added to the marker",
+          "operationId": "dumpsite-new",
+          "requestBody": {
+            "description": "Creates a new dumpsite to be added to the marker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              },
+              "application/x-www-form-urlencoded": {
+                "schema": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PKS"
+                  }
+                },
+                "application/xml": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PKS"
+                  }
+                }
+              }
+            },
+            "403": {
+              "description": "Dumpsite already exists"
+            }
+          }
+        }
+      },
+      "/dumpsites": {
+        "get": {
+          "tags": [
+            "PKS"
+          ],
+          "summary": "Fetch mills and dumpsite",
+          "description": "Fetch and filter mills and dumpsite",
+          "operationId": "dumpsites",
+          "parameters": [
+            {
+              "name": "latitude",
+              "in": "query",
+              "description": "Latitude value that need to considered for filter",
+              "required": false,
+              "explode": false,
+              "schema": {
+                "type": "number",
+                "default": 5.587366
+              }
+            },
+            {
+             "name": "longitude",
+              "in": "query",
+              "description": "Longitude value that need to considered for filter",
+              "required": false,
+              "explode": false,
+              "schema": {
+                "type": "number",
+                "default": 5.587366
+              }
+            },
+            {
+             "name": "status",
+              "in": "query",
+              "description": "PKS dumpsite status that need to considered for filter",
+              "required": false,
+              "explode": false,
+              "schema": {
+                "type": "string",
+                "default": "active"
+              }
+            },
+            {
+              "name": "fromDate",
+              "in": "query",
+              "description": "Dumpsite created on or after this date to be filtered",
+              "required": false,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "default": "2024-01-01"
+              }
+            },
+            {
+              "name": "toDate",
+              "in": "query",
+              "description": "Dumpsite created on or before this date to be filtered",
+              "required": false,
+              "explode": true,
+              "schema": {
+                "type": "string",
+                "default": "2024-11-01"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/requestBodies/DumpsiteArray"
+                  }
+                },
+                "application/xml": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PaginatedResult"
+                  }
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ]
+        }
+      },
+      "/users/banks/account-details/{bankId}": {
+        "delete": {
+          "tags": [
+            "User"
+          ],
+          "summary": "Fetch user withdrawal Banks",
+          "description": "Returns user banks",
+          "operationId": "banks-withdrawal",
+          "parameters": [
+            {
+              "name": "bankId",
+              "in": "path",
+              "description": "Bank ID",
+              "required": true,
+              "explode": false,
+              "schema": {
+                "type": "string",
+                "default": "670d0059faebbdcbec0e99c0"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Bank"
+                  }
+                },
+                "application/xml": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Bank"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Invalid or expired token"
+            }
+          },
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ]
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "PKS": {
+          "type": "object",
+          "properties": {
+            "latitude": {
+              "type": "number",
+              "example": 5.607843
+            },
+            "longitude": {
+              "type": "number",
+              "example": 5.607843
+            },
+            "capacity": {
+              "type": "number",
+              "example": 5
+            },
+            "status": {
+              "type": "string",
+              "default": "active",
+              "enum": [
+                "active",
+                "inactive"
+              ]
+            }
+          },
+          "xml": {
+            "name": "pks"
+          }
+        },
+        "PaginatedResult": {
+          "type": "object",
+          "properties": {
+            "doc": {
+              "type": "array",
+              "example": []
+            },
+            "totalDocs": {
+              "type": "number",
+              "example": 20
+            },
+            "totalPages": {
+              "type": "number",
+              "example": 4
+            },
+            "page": {
+              "type": "number",
+              "example": 1
+            },
+            "limit": {
+              "type": "number",
+              "example": 10
+            },
+            "prevPage": {
+              "type": "number",
+              "example": 1
+            },
+            "nextPage": {
+              "type": "number",
+              "example": 2
+            },
+            "hasPrevPage": {
+              "type": "boolean",
+              "example": true
+            },
+            "hasNextPage": {
+              "type": "boolean",
+              "example": true
+            }
+          },
+          "xml": {
+            "name": "kyc"
+          }
+        },
+        "AuthUser": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "description": "From whom or where did you hear about us",
+                  "example": "FACEBOOK"
+                },
+                "first_name": {
+                  "type": "string",
+                  "example": "John"
+                },
+                "last_name": {
+                  "type": "string",
+                  "example": "James"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "john@email.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "12345"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "12345"
+                },
+                "referral_code": {
+                  "type": "string",
+                  "description": "User referral code",
+                  "example": "John90"
+                }
+              }
+            },
+            "access_token": {
+              "type": "string",
+              "description": "User access token",
+              "example": "209SAr812"
+            },
+            "refresh_token": {
+              "type": "string",
+              "description": "User refresh token",
+              "example": "209SAr812"
+            }
+          },
+          "xml": {
+            "name": "login"
+          }
+        },
+        "ApiResponse": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "status": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "data": {
+              "type": "string"
+            }
+          },
+          "xml": {
+            "name": "##default"
+          }
+        }
+      },
+      "requestBodies": {
+        "MillArray": {
+          "description": "List of user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "DumpsiteArray": {
+          "description": "List of dumpsite object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PKS"
+                }
+              }
+            }
+          }
+        }
+      },
+      "securitySchemes": {
+        "BearerAuth": {
+          "type": "http",
+          "scheme": "bearer"
+        }
+      }
+    }
+  }
+  

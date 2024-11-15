@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS dumpsites DROP COLUMN IF EXISTS numtransactions;

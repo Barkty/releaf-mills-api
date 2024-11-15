@@ -25,40 +25,33 @@ Backend codebase of the IndigoEMR app
 This project is built with:
 
 -   [Nodejs/ExpressJS](https://expressjs.com)
--   [MongoDB](https://cloud.mongodb.com)
+-   [PostgreSQL](https://cloud.mongodb.com)
 -   [Redis](https://redis.io)
--   [Socket.io](https://socket.io)
 
 ### Services
 
--   [AWS](https://aws.amazon.com)
-    -   Elastic Beanstalk: Hosting
-    -   SES: Transactional mails
-    -   Redis: In-memory data store
-    -   s3: File storage
--   [MongoDB](https://cloud.mongodb.com): Database management
--   [New Relic](https://newrelic.com): Observability
+-   [PostgreSQL](https://cloud.mongodb.com): Database management
 -   [Better Uptime](https://betteruptime.com): Web Monitoring & Status page
 -   [Cronjob.org](https://cronjob.org): Cronjob management
 
 ### Conventions
 
 -   **File Structure**
-    Entities are self-contained and organized by modules e.g. all inventory related features or folders are in
-    the `inventory` directory.
+    Entities are self-contained and organized by modules e.g. all dumpsite related features or folders are in
+    the `dumpsites` directory.
 
 ```
-├── inventory
-│ ├── items
-│ ├──── controller.js
-│ ├──── model.js
-| ├──── request.js
-│ └──── route.js
-│ ├── stock-movements
-│ ├──── controller.js
-│ ├──── model.js
-| ├──── request.js
-│ └──── route.js
+├── modules
+│ ├── dumpsite
+│ ├──── controller.ts
+│ ├──── entity.ts
+| ├──── dto.ts
+│ └──── route.ts
+│ ├── mills
+│ ├──── controller.ts
+│ ├──── entity.ts
+| ├──── repository.ts
+│ └──── route.ts
 ```
 
 -   **Exports**
@@ -89,7 +82,7 @@ Sample:
 
 ```
 /**
-* Fetches prescription
+* Fetches dumpsites
 * @async
 * @function fetch
 * @param {Object} req

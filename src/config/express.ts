@@ -26,13 +26,14 @@ app.disable('x-powered-by');
 
 app.use(ROUTE_BASE.V1_PATH, Router);
 
-// app.use((_, res) =>
-//   res.status(404).json({
-//     status: 'error',
-//     code: 404,
-//     message: 'Resource Not Found'
-//   })
-// );
+// Catch-all for 404 errors
+app.use((_req, res) => {
+  res.status(404).json({
+    status: 'error',
+    code: 404,
+    message: 'Resource Not Found'
+  });
+});
 
 app.use(GlobalErrorCatcherMiddleware); // must be last applied middleware to catch globalErrs
 
