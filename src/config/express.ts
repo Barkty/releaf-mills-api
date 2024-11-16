@@ -22,6 +22,8 @@ app.use(helmet());
 
 app.disable('x-powered-by');
 
+app.get('/health', (_req, res) => {res.json({ message: 'Okay' })});
+
 app.use(ROUTE_BASE.V1_PATH, Router);
 
 // Catch-all for 404 errors
