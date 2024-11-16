@@ -4,7 +4,7 @@ import { envValidatorSchema } from './shared/validators/env-validator';
 import Env from './shared/utils/envholder/env';
 import { db } from './config/database';
 import app from './config/express';
-import { AppEnv } from './shared/enums';
+// import { AppEnv } from './shared/enums';
 import Logger from './config/logger';
 
 async function main(app: Express): Promise<void> {
@@ -22,12 +22,11 @@ async function main(app: Express): Promise<void> {
   const server = http.createServer(app);
 
   const PORT = Env.get<number>('PORT') || 9080;
-  const NODE_ENV = Env.get<string>('NODE_ENV');
+  // const NODE_ENV = Env.get<string>('NODE_ENV');
 
-  NODE_ENV !== AppEnv.PRODUCTION &&
-    server.on('listening', () => {
-      logger.info(`Listening on http://localhost:${PORT}`);
-    });
+  server.on('listening', () => {
+    logger.info(`Listening on http://localhost:${PORT}`);
+  });
 
   server.listen(PORT);
 }
