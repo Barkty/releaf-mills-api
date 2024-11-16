@@ -1,5 +1,4 @@
 import winston, { Logger as WinstonLogger } from 'winston';
-// import WinstonNewrelicLogsTransport from 'winston-newrelic-logs-transport';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import Env from '../shared/utils/envholder/env';
 import dayjs from 'dayjs';
@@ -38,11 +37,6 @@ const errorLogRotationTransport = new DailyRotateFile({
   extension: '.log'
 });
 
-// const newRelicLogsTransport = new WinstonNewrelicLogsTransport({
-//   licenseKey: process.env.NEW_RELIC_LICENSE_KEY ?? '',
-//   apiUrl: 'https://log-api.newrelic.com/log/v1' // process.env.NEW_RELIC_API_URL,
-// });
-
 const loggerInfo = (env: string) => {
   let logger;
   switch (env) {
@@ -52,8 +46,8 @@ const loggerInfo = (env: string) => {
       format: logFormat,
       transports: [
         infoLogRotationTransport,
-        errorLogRotationTransport
-        // newRelicLogsTransport
+        errorLogRotationTransport,
+        new winston.transports.Console()
       ],
       exitOnError: false
     });
