@@ -6,6 +6,7 @@ import millsRouter from "../../modules/mills/routes";
 
 const appRouter = express.Router();
 
+appRouter.get('/health', (_req, res) => {res.json({ message: 'Okay' })});
 appRouter.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 appRouter.use('/dumpsites', dumpsiteRouter)
 appRouter.use('/mills', millsRouter)
