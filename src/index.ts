@@ -12,7 +12,9 @@ async function main(app: Express): Promise<void> {
 
   // run the following before initializing App function
   await Env.validateEnv(envValidatorSchema);
-  await db.connect();
+  await db.connect().then(() => {
+    console.log('Connection')
+  })
 
   const server = http.createServer(app);
 

@@ -1,15 +1,42 @@
 {
     "development": {
-      "ENV": "WERELEAF_DEV_DATABASE_URL"
+      "driver": "pg",
+      "user": { "ENV": "WERELEAF_DEV_DATABASE_USER" },
+      "password": { "ENV": "WERELEAF_DEV_DATABASE_PASS" },
+      "host": { "ENV": "WERELEAF_DEV_DATABASE_HOST" },
+      "database": { "ENV": "WERELEAF_DEV_DATABASE_NAME" },
+      "port": { "ENV": "WERELEAF_DEV_DATABASE_PORT" },
+      "ssl": {
+        "rejectUnauthorized": false
+      }
     },
     "staging": {
-      "ENV": "WERELEAF_STAGING_DATABASE_URL"
+      "ENV": "WERELEAF_STAGING_DATABASE_URL",
+      "ssl": {
+        "ca": "./certs/ca-certificate.crt"
+      }
     },
     "test": { 
-      "ENV": "WERELEAF_TEST_DATABASE_URL"
+      "driver": "pg",
+      "user": { "ENV": "WERELEAF_TEST_DATABASE_USER" },
+      "password": { "ENV": "WERELEAF_TEST_DATABASE_PASS" },
+      "host": { "ENV": "WERELEAF_TEST_DATABASE_HOST" },
+      "database": { "ENV": "WERELEAF_TEST_DATABASE_NAME" },
+      "port": { "ENV": "WERELEAF_TEST_DATABASE_PORT" },
+      "ssl": {
+        "rejectUnauthorized": false
+      }
     },
     "production": {
-      "ENV": "WERELEAF_PROD_DATABASE_URL"
+      "driver": "pg",
+      "user": { "ENV": "WERELEAF_PROD_DATABASE_USER" },
+      "password": { "ENV": "WERELEAF_PROD_DATABASE_PASS" },
+      "host": { "ENV": "WERELEAF_PROD_DATABASE_HOST" },
+      "database": { "ENV": "WERELEAF_PROD_DATABASE_NAME" },
+      "port": { "ENV": "WERELEAF_PROD_DATABASE_PORT" },
+      "ssl": {
+        "rejectUnauthorized": false
+      }
     },
     "sql-file": true
 }

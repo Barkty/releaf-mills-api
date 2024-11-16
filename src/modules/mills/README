@@ -1,0 +1,136 @@
+# Mills Module
+
+The Mills module handles all core functionality for managing mills within the Releaf API. It includes the creation, retrieval, and updating of mill records with appropriate data validations and repository interactions.
+
+---
+
+## Overview
+
+The Mills module comprises:
+
+1. **Services**: Core business logic for mill operations.
+2. **Repositories**: Database query abstraction layer.
+3. **DTOs**: Structured data transfer objects for inputs and outputs.
+4. **Entities**: Definition of the Mills data model.
+
+---
+
+## Services
+
+The **Mills Services** layer implements the business logic for managing mills, ensuring data validation and calling the appropriate repository methods.
+
+### Functions in Services
+
+#### `create(args: CreateMills)`
+
+Creates a new mill record after ensuring no duplicates exist based on the coordinates.
+
+- **Parameters**:
+  - `args`: An object containing latitude, longitude, mill name, transaction data, and other relevant details.
+- **Process**:
+  1. Checks if a mill with the same coordinates already exists using the repository.
+  2. If no duplicates exist, creates a new mill record.
+- **Returns**:
+  - A `Mills` object on success.
+  - A `BadException` error if a mill already exists with the provided coordinates.
+
+---
+
+#### `fetch(args: Partial<FilterMills>)`
+
+Retrieves mill records based on optional filtering criteria.
+
+- **Parameters**:
+  - `args`: A partial object containing filter criteria such as latitude, transaction dates, or mill status.
+- **Process**:
+  1. Passes the filter parameters to the repository for execution.
+  2. Retrieves a list of mill records matching the filters.
+- **Returns**:
+  - A list of `Mills` objects that match the provided criteria.
+
+---
+
+#### `update(args: CreateMills, mill_id: string)`
+
+Updates an existing mill's details.
+
+- **Parameters**:
+  - `args`: An object containing updated mill details.
+  - `mill_id`: The unique ID of the mill to update.
+- **Process**:
+  1. Validates if the mill exists using the repository.
+  2. Updates the mill if it exists.
+- **Returns**:
+  - An updated `Mills` object on success.
+  - A `BadException` error if the mill does not exist.
+
+---
+
+## Repositories
+
+The **Mills Repository** abstracts the database interactions, enabling a clear separation between business logic and data handling.
+
+### Key Functions in Repository
+
+#### `fetchSingleMill(filter: string[])`
+
+Fetches a single mill record based on specific filters (e.g., latitude and longitude).
+
+#### `createMill(payload: string[])`
+
+Inserts a new mill record into the database.
+
+#### `fetchAndFilterMill(payload: any[])`
+
+Retrieves mill records using optional filters such as date ranges or geographic location.
+
+#### `editMill(payload: string[])`
+
+Updates a mill record with new data.
+
+---
+
+## DTOs (Data Transfer Objects)
+
+DTOs enforce consistency and validation for data passed between the application layers.
+
+### Example DTOs
+
+#### `CreateMills`
+
+Defines the structure for creating or updating mill records.
+
+```typescript
+export interface CreateMills {
+    latitude: string;
+    longitude: string;
+    millname: string;
+    p1amount: number;
+    p1priceton: number;
+    numtransactions: number;
+    lasttransactiondate: Date;
+}
+```
+
+---
+
+## Folder Structure
+
+The Mills module adheres to a modular folder structure for maintainability:
+
+```
+├── modules
+│   ├── mills
+│   │   ├── controller.ts      # Handles API request routing.
+│   │   ├── entities.ts        # Defines the Mills data model.
+│   │   ├── repository.ts      # Database interaction layer.
+│   │   ├── services.ts        # Core business logic.
+│   │   ├── dto.ts             # Data Transfer Objects.
+│   │   └── routes.ts          # API route definitions.
+```
+
+---
+
+## Routes
+
+For detailed information on API routes, refer to the [Swagger Documentation](). This provides an overview of available endpoints for managing mills, including creating, updating, and fetching mill records.

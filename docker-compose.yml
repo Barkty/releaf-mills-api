@@ -6,11 +6,13 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000" # Expose application on port 3000
+      - "3421:3000" # Expose application on port 3000
     environment:
       # Set environment variables for the application
       DATABASE_URL: "postgresql://postgres:postgres@db:5432/mydb"
       REDIS_URL: "redis://redis:6379"
+      WERELEAF_NODE_ENV: "production"
+      WERELEAF_PORT: 3421
     depends_on:
       - db
       - redis

@@ -1,0 +1,22 @@
+# Middlewares
+
+This houses the functions that feeds Demo API middleware.
+
+## [validateDataMiddleware](./request-body-validator.js)
+
+This middleware validates the request parameters and payload sent to the controllers. It is powered using `joi`.
+
+-   description: validates the request parameters and payload sent to the controllers <br>
+-   parameters: <br>
+    -   `validationSchema`: a joi schema validation<br>
+    -   `type`: type of the request which in this case can either be a `payload`, `query`, `params` or `headers`. This depends on where the areguments are expected per endpoint <br>
+-   procedure:<br>
+    -   validation is done by checking the type of parameters that is expected and if there are any errors triggered by the joi schema
+    -   a failed validation from the middleware returns an UNPROCESSABLE ENTITY error type
+    -   if the validation is successful, the express `next` function is called which moves the request to the next function.<br>
+-   returns: <br>
+    -   an express `next` function
+
+## [WatchAsyncController](../utils/watch-async-controller.js)
+
+This middleware runs the controller in a `Promise` function and catches any server error

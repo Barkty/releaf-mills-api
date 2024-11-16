@@ -1,118 +1,142 @@
-# StashWise API
+# RELEAF API
 
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
-# Table of Contents
+## Table of Contents
 
--   [General Info](#general-info)
+- [General Info](#general-info)
+- [Technologies](#technologies)
+- [3rd Party Services](#services)
+- [Setup](#setup)
+- [Conventions](#conventions)
+- [Tests](#tests)
+- [Status](#status)
 
--   [Technologies](#technologies)
+## General Info
 
--   [3rd party services](#services)
+This is the backend codebase for the RELEAF Mills and PKS Dumpsites app. It provides RESTful API endpoints to manage entities such as dumpsites and mills, with robust support for database and caching.
 
--   [Setup](#setup)
-
--   [Conventions](#conventions)
-
--   [Status](#status)
-
-### General Info
-
-Backend codebase of the IndigoEMR app
-
-### Technologies
+## Technologies
 
 This project is built with:
 
--   [Nodejs/ExpressJS](https://expressjs.com)
--   [PostgreSQL](https://cloud.mongodb.com)
--   [Redis](https://redis.io)
+- [Node.js/ExpressJS](https://expressjs.com)
+- [PostgreSQL](https://postgresql.org)
+- [Redis](https://redis.io)
 
-### Services
+## 3rd Party Services
 
--   [PostgreSQL](https://cloud.mongodb.com): Database management
--   [Better Uptime](https://betteruptime.com): Web Monitoring & Status page
--   [Cronjob.org](https://cronjob.org): Cronjob management
+- [PostgreSQL](https://postgresql.org): Database management
+- [Better Uptime](https://betteruptime.com): Web Monitoring & Status page
+- [Cronjob.org](https://cronjob.org): Cronjob management
 
-### Conventions
+## Conventions
 
--   **File Structure**
-    Entities are self-contained and organized by modules e.g. all dumpsite related features or folders are in
-    the `dumpsites` directory.
+### File Structure
+
+Entities are self-contained and organized by modules. For example, all dumpsite-related features are within the `dumpsites` directory.
 
 ```
 ├── modules
-│ ├── dumpsite
-│ ├──── controller.ts
-│ ├──── entity.ts
-| ├──── dto.ts
-│ └──── route.ts
-│ ├── mills
-│ ├──── controller.ts
-│ ├──── entity.ts
-| ├──── repository.ts
-│ └──── route.ts
+│   ├── dumpsite
+│   │   ├── controller.ts
+│   │   ├── entity.ts
+│   │   ├── dto.ts
+│   │   └── route.ts
+│   ├── mills
+│       ├── controller.ts
+│       ├── entity.ts
+│       ├── repository.ts
+│       └── route.ts
 ```
 
--   **Exports**
-    Exports are to be inline. \*\*Most are currently at the end of every file but we are moving towards inline so
-    everything is tidier.
--   **Imports**
-    Imports are sorted alphabetically. To enable this setting on `VSCode`:
-    Open the settings (⇧⌘P or Ctrl+Shift+P), find `Preferences: Configure Language Specific Settings...` and then find
-    the `JavaScript`. It will open the `settings.json` file. Now add the configuration:
+### Exports
 
-```
+Exports are inline for better organization and maintainability.  
+
+### Imports
+
+Imports are sorted alphabetically. To enable this in `VSCode`, add the following to your `settings.json`:
+
+```json
 "editor.codeActionsOnSave": {
-	"source.organizeImports": true
+  "source.organizeImports": true
 },
 ```
 
--   **Naming**
+### Naming
 
-    -   Models are capitalized and singular e.g.
-        `const Model = model("Bed", schema);`
+- Models are capitalized and singular, e.g., `export interface IMill {};`.
+- Filenames for entities are lowercase, plural, and hyphen-separated, e.g., `mills`, `dumpsites`, etc.
 
-    -   Filenames for entities are lowercase, plural and are hyphen-separated e.g. `beds`, `case-notes` etc
+### Documentation
 
--   **Documentation**
-    _Always namespace files_ e.g. `/** @namespace PrescriptionController */`
+Use namespaces for files, e.g., `/** @namespace PrescriptionController */`.
 
 Sample:
 
-```
+```ts
 /**
-* Fetches dumpsites
-* @async
-* @function fetch
-* @param {Object} req
-* @param {Object} res
-* @returns Promise<Object>
-*/
-
+ * Fetches dumpsites
+ * @async
+ * @function fetch
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ * @returns Promise<Object>
+ */
 ```
 
--   **Postman**
-    Try to be as modular as possible. Store endpoints used in a single module together in a folder.
+### Swagger Docs
 
--   **Tests**
--   _Coming Soon._
+Store endpoints for a single module together in one folder for modularity.
 
-### Setup
+## Setup
 
-#### Prerequisites
+### Prerequisites
 
-To run this locally, you need to have [Redis](https://redis.io) setup on your PC
+To run this project locally, ensure you have the following installed:
 
-#### Installation
+- [Redis](https://redis.io)
+- [PostgreSQL](https://postgresql.org)
 
-To run this project,
+### Installation
 
-```
+```bash
 yarn install
 yarn dev
 ```
 
-### Status
+## Tests
+
+### Unit Tests
+
+Unit tests have been written to validate key functionalities of the API. Tests ensure the correctness of:
+
+- **Mills Module**  
+  - Validation of mill creation and updates.
+  - Fetching mill details.
+
+- **Dumpsites Module**  
+  - Endpoint response validation for dumpsite creation.
+  - Ensuring accurate dumpsite list retrieval.
+
+- **Utility Functions**  
+  - Testing helper functions used across the codebase.
+
+The tests are written using [Mocha](https://mochajs.org) and [Chai](https://www.chaijs.com).  
+
+### Running Tests
+
+To execute unit tests, run:
+
+```bash
+yarn test
+```
+
+### Code Coverage
+
+Ensure all changes are accompanied by tests to maintain high code coverage.
+
+## Status
 
 Status page generated by BetterUptime: [View Status Page](https://summitech.betteruptime.com)

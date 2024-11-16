@@ -1,0 +1,136 @@
+# Palm Kernel Shell Dumpsites
+
+This module manages the core functionality of the Palm Kernel Shell Dumpsites for Releaf API. It handles the creation, updating, and retrieval of dumpsite records with robust validation and data handling.
+
+---
+
+## Overview
+
+The Dumpsites module is structured into the following key components:
+
+1. **Services**: Business logic for interacting with dumpsite data.
+2. **Repositories**: Abstraction layer for database queries.
+3. **DTOs**: Data Transfer Objects for structured request payloads and query parameters.
+4. **Entities**: Definitions of the Dumpsite data model.
+
+---
+
+## Services
+
+The **Dumpsite Services** layer contains the business logic for managing dumpsite operations. It interacts with the repository to perform database operations and ensures data integrity through validations.
+
+### Functions in Services
+
+#### `create(args: DumpSite)`
+
+Creates a new dumpsite record after ensuring no duplicates exist for the given coordinates.
+
+- **Parameters**: 
+  - `args`: An object containing latitude, longitude, status, and capacity.
+- **Process**:
+  1. Checks if a dumpsite with the same coordinates already exists using the repository.
+  2. If no duplicates are found, creates a new dumpsite using the repository.
+- **Returns**: 
+  - A `DumpSite` object on success.
+  - A `BadException` error if the dumpsite already exists.
+
+---
+
+#### `update(args: DumpSite, dump_id: string)`
+
+Updates the details of an existing dumpsite.
+
+- **Parameters**: 
+  - `args`: An object with the updated latitude, longitude, status, and capacity.
+  - `dump_id`: The unique ID of the dumpsite to be updated.
+- **Process**:
+  1. Validates if the dumpsite exists using its ID.
+  2. Updates the dumpsite if it exists.
+- **Returns**: 
+  - An updated `DumpSite` object on success.
+  - A `BadException` error if the dumpsite does not exist.
+
+---
+
+#### `fetch(args: Partial<FilterDumpSite>)`
+
+Retrieves dumpsite records based on filtering criteria.
+
+- **Parameters**: 
+  - `args`: A partial object containing optional filtering parameters like latitude, status, or date ranges (`from_date`, `to_date`).
+- **Process**:
+  1. Passes filter arguments to the repository for execution.
+  2. Retrieves filtered dumpsite data.
+- **Returns**: 
+  - A list of dumpsites matching the criteria.
+
+---
+
+## Repositories
+
+The **Dumpsite Repository** layer abstracts database interactions and provides reusable query functions.
+
+### Key Functions in Repository
+
+#### `fetchSingleDumpsite(filter: string[])`
+
+Fetches a single dumpsite record based on a specific filter (e.g., latitude and longitude).
+
+#### `createDumpsite(payload: string[])`
+
+Inserts a new dumpsite record into the database.
+
+#### `fetchSingleDumpsiteById(filter: string[])`
+
+Fetches a dumpsite by its unique ID.
+
+#### `editDumpSite(payload: string[])`
+
+Updates a dumpsite record with new data.
+
+#### `fetchAndFilterDumpsites(payload: any[])`
+
+Fetches dumpsite records using optional filters like latitude, status, or date ranges.
+
+---
+
+## DTOs (Data Transfer Objects)
+
+DTOs ensure a structured and consistent format for data passed between layers.
+
+### Example DTOs
+
+#### `FilterDumpSite`
+
+Used to filter dumpsites during retrieval.
+
+```typescript
+export interface FilterDumpSite {
+    latitude?: string;
+    longitude?: string;
+    status?: 'inactive' | 'active';
+    from_date?: Date;
+    to_date?: Date;
+}
+```
+
+---
+
+## Routes
+
+For detailed API routes and request/response formats, refer to the [Swagger Documentation](). This includes routes for creating, updating, and fetching dumpsite data.
+
+---
+
+## Folder Structure
+
+```
+├── modules
+│   ├── dumpsites
+│   │   ├── controller.ts      # Handles incoming API requests.
+│   │   ├── entities.ts        # Defines the Dumpsite entity.
+│   │   ├── repository.ts      # Abstraction for database queries.
+│   │   ├── services.ts        # Core business logic for Dumpsites.
+│   │   ├── dto.ts             # Data Transfer Objects for structured input/output.
+│   │   └── routes.ts          # API route definitions.
+```
