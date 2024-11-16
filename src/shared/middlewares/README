@@ -1,6 +1,6 @@
 # Middlewares
 
-This houses the functions that feeds Demo API middleware.
+This houses the functions that feeds Releaf API middleware.
 
 ## [validateDataMiddleware](./request-body-validator.js)
 

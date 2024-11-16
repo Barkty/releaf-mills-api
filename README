@@ -88,7 +88,7 @@ Sample:
 
 ### Swagger Docs
 
-Store endpoints for a single module together in one folder for modularity.
+Store endpoints for a single module together in one folder for modularity which can be found at the [Releaf Swagger Docs](https://seal-app-62ax4.ondigitalocean.app/api/v1/docs/).
 
 ## Setup
 

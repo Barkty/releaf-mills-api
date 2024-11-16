@@ -2,7 +2,7 @@
     "openapi": "3.0.3",
     "info": {
       "title": "WERELEAF API 1.0",
-      "description": "This is documentation for Wereleaf Mills and Palm Kernel Shell (PKS) Dumpsite Map Markeer API based on the OpenAPI 3.0 specification. You can find out more about\nWereleaf at [https://www.releaf.africa](https://www.releaf.africa/). In the first iteration of the Stashwise solution, we've implemented the mills map marker and design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.",
+      "description": "This is documentation for Wereleaf Mills and Palm Kernel Shell (PKS) Dumpsite Map Markeer API based on the OpenAPI 3.0 specification. You can find out more about\nWereleaf at [https://www.releaf.africa](https://www.releaf.africa/). In the first iteration of the Releaf Mill and PKS Dumpsite solution, we've implemented the mills map marker and design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.",
       "termsOfService": "https://www.releaf.africa/privacy-policy/",
       "contact": {
         "email": "support@releaf.earth"
@@ -19,7 +19,7 @@
     },
     "servers": [
       {
-        "url": "https://releaf-mills-api.onrender.com/api/v1"
+        "url": "https://seal-app-62ax4.ondigitalocean.app/api/v1"
       },
       {
         "url": "http://localhost:3421/api/v1"
@@ -187,7 +187,7 @@
       "/dumpsites/{dump_id}": {
         "patch": {
           "tags": [
-            "User"
+            "PKS"
           ],
           "summary": "Edit dumpsite",
           "description": "Edit dumpsite",

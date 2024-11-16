@@ -133,4 +133,4 @@ The Mills module adheres to a modular folder structure for maintainability:
 
 ## Routes
 
-For detailed information on API routes, refer to the [Swagger Documentation](). This provides an overview of available endpoints for managing mills, including creating, updating, and fetching mill records.
+For detailed information on API routes, refer to the [Swagger Documentation](https://seal-app-62ax4.ondigitalocean.app/api/v1/docs/). This provides an overview of available endpoints for managing mills, including creating, updating, and fetching mill records.

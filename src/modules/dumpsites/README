@@ -118,7 +118,7 @@ export interface FilterDumpSite {
 
 ## Routes
 
-For detailed API routes and request/response formats, refer to the [Swagger Documentation](). This includes routes for creating, updating, and fetching dumpsite data.
+For detailed API routes and request/response formats, refer to the [Swagger Documentation](https://seal-app-62ax4.ondigitalocean.app/api/v1/docs/). This includes routes for creating, updating, and fetching dumpsite data.
 
 ---
 
